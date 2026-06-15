@@ -76,12 +76,11 @@ const handleDragStart = (axisName) => {
 };
 
 const handleDragMove = (event) => {
-  state.axisPositions[state.draggingAxis] = state.axisPositions[state.draggingAxis] + event.x;
+  state.axisPositions[state.draggingAxis] = state.axisPositions[state.draggingAxis] + event.dx;
   renderChart();
 };
 
-const handleDragEnd = (axisName, event) => {
-  state.axisPositions[state.draggingAxis] = state.axisPositions[state.draggingAxis] + event.x;
+const handleDragEnd = (axisName) => {
   state.axes = Object.keys(state.axisPositions).sort((left, right) => {
     return state.axisPositions[left] - state.axisPositions[right];
   });
@@ -154,8 +153,8 @@ const renderChart = () => {
       .on("drag", function (event) {
         handleDragMove(event);
       })
-      .on("end", function (event) {
-        handleDragEnd(axisName, event);
+      .on("end", function () {
+        handleDragEnd(axisName);
       });
 
     axisLabel.call(dragY);
